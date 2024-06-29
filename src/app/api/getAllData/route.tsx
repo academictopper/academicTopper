@@ -1,30 +1,33 @@
+// pages/api/questions.js
+import { NextApiRequest, NextApiResponse } from 'next';
 import { connect } from '@/lib/dbConnect';
-import Question from '@/models/Question';
-import { NextRequest, NextResponse } from 'next/server';
+import Question, { QuestionDocument } from '@/models/Question'; // Adjust the path according to your project structure
+import { NextResponse } from 'next/server';
 
-export async function POST(request:NextRequest) {
+export async function GET(req: NextResponse, res: NextResponse) {
+  await connect();
+
+  const filter = req.url.split('?')[1];
+  let queryFilter: { [key: string]: string } = {}
+
+  if (filter) {
+    const parts = filter.split('=');
+    queryFilter[parts[0]] = parts[1];
+  }
+
   try {
-    await connect();
-    
-    const data = await request.json();
-    const { board, class: className, subject, chapter, questionArray, pdfile } = data;
-
-    if (!board || !className || !subject || !chapter || !questionArray) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    let questions;
+    if (!filter) {
+      // No filters provided, fetch all questions
+      questions = await Question.find();
+    } else {
+      // Apply filters if any are provided
+      questions = await Question.find(queryFilter);
     }
 
-    const newQuestion = new Question({
-      board,
-      class: className,
-      subject,
-      chapter,
-      questionArray,
-      pdfile,
-    });
-
-    await newQuestion.save();
-    return NextResponse.json({ message: 'Question saved successfully', question: newQuestion }, { status: 201 });
+    return NextResponse.json({ message: 'Questions shown successfully', questions }, { status: 201 });
   } catch (error:any) {
-    return NextResponse.json({ error: 'Error saving question', details: error.message }, { status: 500 });
+    console.error('Error fetching data:', error);
+    return NextResponse.json({ error: 'Error showing questions', details: error.message }, { status: 500 });
   }
 }

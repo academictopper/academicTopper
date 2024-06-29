@@ -13,7 +13,7 @@ interface IQuestion {
   pdfile?: string;
 }
 
-interface QuestionDocument extends IQuestion, Document {}
+export interface QuestionDocument extends IQuestion, Document {}
 
 const QuestionSchema: Schema<QuestionDocument> = new Schema({
   board: { type: String, required: true },
