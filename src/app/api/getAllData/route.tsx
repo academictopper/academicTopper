@@ -1,23 +1,25 @@
-// pages/api/questions.js
-import { NextApiRequest, NextApiResponse } from 'next';
 import { connect } from '@/lib/dbConnect';
-import Question, { QuestionDocument } from '@/models/Question'; // Adjust the path according to your project structure
+import Question, { QuestionDocument } from '@/models/Question'; 
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest, res: NextResponse) {
   await connect();
 
   const filter = req.url.split('?')[1];
-  let queryFilter: { [key: string]: string } = {}
+  let queryFilter: { [key: string]: string } = {};
 
   if (filter) {
-    const parts = filter.split('=');
-    queryFilter[parts[0]] = parts[1];
+    // Splitting the filter string into key-value pairs
+    const pairs = filter.split('&');
+    pairs.forEach(pair => {
+      const [key, value] = pair.split('=');
+      queryFilter[key] = value;
+    });
   }
 
   try {
     let questions;
-    if (!filter) {
+    if (Object.keys(queryFilter).length === 0) {
       // No filters provided, fetch all questions
       questions = await Question.find();
     } else {
@@ -26,7 +28,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     }
 
     return NextResponse.json({ message: 'Questions shown successfully', questions }, { status: 200 });
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error fetching data:', error);
     return NextResponse.json({ error: 'Error showing questions', details: error.message }, { status: 500 });
   }
