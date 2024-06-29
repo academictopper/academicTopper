@@ -2,9 +2,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { connect } from '@/lib/dbConnect';
 import Question, { QuestionDocument } from '@/models/Question'; // Adjust the path according to your project structure
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextResponse, res: NextResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   await connect();
 
   const filter = req.url.split('?')[1];
@@ -25,7 +25,7 @@ export async function GET(req: NextResponse, res: NextResponse) {
       questions = await Question.find(queryFilter);
     }
 
-    return NextResponse.json({ message: 'Questions shown successfully', questions }, { status: 201 });
+    return NextResponse.json({ message: 'Questions shown successfully', questions }, { status: 200 });
   } catch (error:any) {
     console.error('Error fetching data:', error);
     return NextResponse.json({ error: 'Error showing questions', details: error.message }, { status: 500 });
