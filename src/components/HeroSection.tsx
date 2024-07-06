@@ -2,12 +2,9 @@
 import Link from "next/link";
 import { Spotlight } from "./ui/Spotlight";
 import { Button } from "./ui/moving-border";
-<<<<<<< HEAD
 import { useSession } from "next-auth/react";
 import SignoutButton from "./Signout";
-=======
 import { AdminPortal } from "./AdminPortal";
->>>>>>> 37b50c3696535b01af9a7baddc6cd35747f5c9d2
 
 function HeroSection() {
   const { data } = useSession();
