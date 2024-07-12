@@ -11,6 +11,7 @@ interface IQuestion {
     image?: string;
   }[];
   pdfile?: string;
+  isFeatured?:boolean
 }
 
 export interface QuestionDocument extends IQuestion, Document {}
@@ -28,6 +29,7 @@ const QuestionSchema: Schema<QuestionDocument> = new Schema({
     },
   ],
   pdfile: { type: String },
+  isFeatured:{type:Boolean},
 });
 
 const Question: Model<QuestionDocument> = mongoose.models.Question || mongoose.model<QuestionDocument>('Question', QuestionSchema);

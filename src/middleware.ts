@@ -14,7 +14,7 @@ export function middleware(req: NextRequest) {
 //     return NextResponse.redirect(new URL('/', req.url));
 //   }
 
-if (req.url === '/login?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F') {
+if (req.url === '/login?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F || https://academic-topper.vercel.app/login?callbackUrl=https%3A%2F%2Fwww.letzkhelo.com%2F') {
     // Redirect to the new URL
     return NextResponse.redirect(new URL('/', req.url));
   }

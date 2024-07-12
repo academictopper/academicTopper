@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 export function EditAdminCoursesDynamic(params : any) {
 
   const [formState, setFormState] = useState({
+    _id:"",
     board: "",
     class: "",
     subject: "",
@@ -172,11 +173,15 @@ export function EditAdminCoursesDynamic(params : any) {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
-      console.log(formState);
-      const response = await axios.post("/api/postAllData", formState);
+      console.log({formState});
+      const response = await axios.patch('/api/updateData', {
+        id:formState._id,
+        ...formState,
+      });
+  
       console.log("Success:", response.data);
-      // Reset the form after successful submission
       setFormState({
+        _id:"",
         board: "",
         class: "",
         subject: "",

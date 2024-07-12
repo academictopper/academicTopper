@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 export function connect() {
-  mongoose.connect('mongodb+srv://academictopper7:ac3NxqrycoR93Vw2@academic-topper.g7zhgbz.mongodb.net/',{
+  mongoose.connect(process.env.MONGODB_URL!,{
     tls: true,
     ssl: true,
   })

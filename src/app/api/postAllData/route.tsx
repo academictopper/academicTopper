@@ -7,10 +7,15 @@ export async function POST(request:NextRequest) {
     await connect();
     
     const data = await request.json();
-    const { board, class: className, subject, chapter, questionArray, pdfile } = data;
+    const { board, class: className, subject, chapter, questionArray, pdfile,isFeatured } = data;
 
     if (!board || !className || !subject || !chapter || !questionArray) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+    // Check if a question with the same board, class, subject, and chapter already exists
+    const existingQuestion = await Question.findOne({ board, class: className, subject, chapter });
+    if (existingQuestion) {
+      return NextResponse.json({ error: 'A question with the same board, class, subject, and chapter already exists' }, { status: 409 });
     }
 
     const newQuestion = new Question({
@@ -20,6 +25,7 @@ export async function POST(request:NextRequest) {
       chapter,
       questionArray,
       pdfile,
+      isFeatured
     });
 
     await newQuestion.save();

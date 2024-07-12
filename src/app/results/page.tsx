@@ -1,12 +1,14 @@
-import Results from '@/components/Results';
-import React from 'react'
+import { Suspense } from "react";
+import Results from "@/components/Results";
 
 const ShowResult = ({ params }: any) => {
   return (
     <div>
-      <Results params={params} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Results />
+      </Suspense>
     </div>
-  )
-}
+  );
+};
 
 export default ShowResult;
