@@ -1,0 +1,109 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+const AdminCourses = () => {
+
+  const questionsData = [
+    {
+      _id: "667fc820933dc0d16ec6257c",
+      board: "CBSE",
+      class: "10",
+      subject: "Mathematics",
+      chapter: "Trigonometry",
+      questionArray: [
+        {
+          question: "What is the value of sin 90°?",
+          answer: "1",
+          image: "https://example.com/image1.png",
+          // _id: "667fc820933dc0d16ec6257d"
+        },
+        {
+          question: "What is the value of cos 0°?",
+          answer: "1",
+          // _id: "667fc820933dc0d16ec6257e"
+        }
+      ],
+      pdfile: "https://example.com/somefile.pdf",
+      __v: 0
+    },
+  ];
+
+  const [data, setData] = useState(questionsData);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/getAllData");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        setData(result.questions);
+        setLoading(false);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+        // setError(error.toString());
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Error: {error}
+      </div>
+    );
+  }
+
+  const handleEdit = (item: any) => {
+    router.push(`/admin/editQuestions/${item._id}`);
+  };
+
+  // useEffect(() => {
+  //   console.log("data:", data); 
+  // }, [data]);
+
+  return (
+    <div className="max-w-4xl mx-auto p-4">
+      {data.map((item) => (
+        <div key={item._id} className="bg-white shadow-md rounded-lg p-6 mb-6">
+          <h1 className="text-2xl font-bold mb-4">
+            {item.subject} - {item.chapter}
+          </h1>
+          <p className="text-sm text-gray-700 mb-2">
+            <strong>Board:</strong> {item.board}
+          </p>
+          <p className="text-sm text-gray-700 mb-2">
+            <strong>Class:</strong> {item.class}
+          </p>
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => handleEdit(item)}
+              className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default AdminCourses;
