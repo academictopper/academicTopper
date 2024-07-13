@@ -2,6 +2,8 @@
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Spotlight } from "./ui/Spotlight";
+
 
 export function EditAdminCoursesDynamic(params : any) {
 
@@ -196,10 +198,14 @@ export function EditAdminCoursesDynamic(params : any) {
 
   return (
     <div>
-      <div className="w-full lg:bg-[#090c31] flex justify-center items-center lg:h-auto">
-        <main className="bg-white w-full h-full lg:h-[95%] lg:w-[70%] p-12 my-6 lg:rounded-tl-none lg:rounded-tr-[200px] lg:rounded-br-[200px] lg:rounded-bl-none">
+     <div className="w-full bg-black/[0.96] antialiased bg-grid-white/[0.02]  flex justify-center items-center lg:h-auto">
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
+        <main className="bg-gray-400 mt-32 w-full h-full lg:h-[95%] lg:w-[70%] p-12 my-6 lg:rounded-tl-none lg:rounded-tr-[200px] lg:rounded-br-[200px] lg:rounded-bl-none">
           <h2 className="flex uppercase justify-center font-bold text-xl pt-10 pb-3 border-b-2 border-b-orange-700 lg:text-2xl lg:justify-start">
-            Admin Edit Portal ID : {params.params.id}
+            Admin Edit Portal
           </h2>
           <form
             className="m-2 flex flex-col items-center justify-center lg:m-20"

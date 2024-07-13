@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { Spotlight } from "./ui/Spotlight";
 import { useRouter } from "next/navigation";
 
 const AdminCourses = () => {
@@ -80,9 +81,14 @@ const AdminCourses = () => {
   // }, [data]);
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto  p-4">
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
+      <div className="mt-32">
       {data.map((item) => (
-        <div key={item._id} className="bg-white shadow-md rounded-lg p-6 mb-6">
+        <div key={item._id} className="bg-gray-400 m-2 shadow-md rounded-lg p-6 mb-6t ">
           <h1 className="text-2xl font-bold mb-4">
             {item.subject} - {item.chapter}
           </h1>
@@ -102,6 +108,7 @@ const AdminCourses = () => {
           </div>
         </div>
       ))}
+      </div>
     </div>
   );
 };

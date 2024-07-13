@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Spotlight } from "./ui/Spotlight";
 import { useSearchParams } from "next/navigation";
 import Modal from "@/components/Image";
 
@@ -40,12 +41,16 @@ const Results = (params: any) => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="w-full max-w-7xl bg-white shadow-md rounded-lg p-6 flex flex-col items-center">
+    <div className="min-h-screen flex items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] p-4">
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
+      <div className="w-full max-w-7xl bg-gray-400 shadow-md rounded-lg p-6 flex flex-col items-center mt-32">
         <h1 className="text-3xl font-bold text-center mb-6">Important Questions</h1>
-        <div className="space-y-8 w-full">
+        <div className="space-y-8 w-full ">
           {data.map((item:any) => (
-            <div key={item._id} className="border p-6 rounded-lg bg-gray-50 shadow-lg relative">
+            <div key={item._id} className="border p-6 rounded-lg bg-gray-400 shadow-lg relative">
               <h2 className="text-2xl font-semibold mb-4 text-center">{item.subject} - {item.chapter}</h2>
               <p className="text-lg text-center mb-2"><strong>Board:</strong> {item.board}</p>
               <p className="text-lg text-center mb-4"><strong>Class:</strong> {item.class}</p>

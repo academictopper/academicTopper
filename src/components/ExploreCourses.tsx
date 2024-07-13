@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { Spotlight } from "./ui/Spotlight";
 import { useRouter } from 'next/navigation';
 
 const ExploreCourses = () => {
@@ -31,11 +32,15 @@ const ExploreCourses = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="max-w-4xl w-full bg-white shadow-md rounded-lg p-6">
+    <div className="min-h-screen flex items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] p-4">
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
+      <div className="max-w-4xl w-full bg-gray-400 shadow-md rounded-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-6">Explore Courses</h1>
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 ">
             <div className="sm:col-span-1">
               <label
                 htmlFor="board"
