@@ -10,24 +10,29 @@ const Results = (params: any) => {
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageSrc, setModalImageSrc] = useState('');
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const searchParams = useSearchParams();
   const board = searchParams.get("board");
   const clas = searchParams.get("class");
   const subject = searchParams.get("subject");
   const chapter = searchParams.get("chapter");
-  // console.log(queryParams)
+  const showPdf = searchParams.get("showPdf");
 
   useEffect(() => {
-    // console.log("search",search);
     fetch(`/api/getAllData?board=${board}&class=${clas}&subject=${subject}&chapter=${chapter}`)
       .then((response) => response.json())
-      .then((data) => setData(data.questions))
+      .then((data) => {
+        setData(data.questions);
+        if (showPdf === 'true' && data.questions.length > 0) {
+          setShouldRedirect(true);
+          window.location.href = data.questions[0].pdfile;
+        }
+      })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  if (!data) return <div>Loading...</div>;
-  console.log(data)
+  if (shouldRedirect || !data.length) return <div>Loading...</div>;
 
   const handleImageClick = (imageSrc: string) => {
     setModalImageSrc(imageSrc);
@@ -39,7 +44,6 @@ const Results = (params: any) => {
     setModalImageSrc('');
   };
 
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] p-4">
       <Spotlight
@@ -48,7 +52,7 @@ const Results = (params: any) => {
       />
       <div className="w-full max-w-7xl bg-gray-400 shadow-md rounded-lg p-6 flex flex-col items-center mt-32">
         <h1 className="text-3xl font-bold text-center mb-6">Important Questions</h1>
-        <div className="space-y-8 w-full ">
+        <div className="space-y-8 w-full">
           {data.map((item:any) => (
             <div key={item._id} className="border p-6 rounded-lg bg-gray-400 shadow-lg relative">
               <h2 className="text-2xl font-semibold mb-4 text-center">{item.subject} - {item.chapter}</h2>
@@ -93,7 +97,6 @@ const Results = (params: any) => {
       </div>
       <Modal show={isModalOpen} onClose={handleCloseModal} imageSrc={modalImageSrc} />
     </div>
-    
   );
 };
 

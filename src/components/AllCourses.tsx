@@ -53,11 +53,10 @@ export function AllCourses() {
                         <BackgroundGradient
                         className="flex flex-col rounded-[22px] min-w-[300px] bg-white dark:bg-zinc-900 overflow-hidden h-full max-w-sm">
                             <div className="p-4 sm:p-6 flex flex-col items-center text-center flex-grow">
-                                <p className="text-lg sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">{course.board}</p>
-                                <p className="text-sm text-neutral-600 dark:text-neutral-400 flex-grow">{course.subject}</p>
-                                <p className="text-sm text-neutral-600 dark:text-neutral-400 flex-grow">{course.chapter}</p>
-                                <p className="text-sm text-neutral-600 dark:text-neutral-400 flex-grow">{course.class}</p>
-
+                                <p className="text-lg sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">Board: {course.board}</p>
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400 flex-grow">Subject: {course.subject}</p>
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400 flex-grow">Chapter: {course.chapter}</p>
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400 flex-grow">Class: {course.class}</p>
 
                                 <Link href={`/results/?board=${course.board}&class=${course.class}&subject=${course.subject}&chapter=${course.chapter}`}>
                                 Learn More

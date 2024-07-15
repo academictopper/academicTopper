@@ -87,6 +87,12 @@ const AdminCourses = () => {
         fill="white"
       />
       <div className="mt-32">
+      <button
+              onClick={() => router.push('/admin/addQuestions')}
+              className="ml-4 justify-center inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+            >
+              Add Courses
+            </button>
       {data.map((item) => (
         <div key={item._id} className="bg-gray-400 m-2 shadow-md rounded-lg p-6 mb-6t ">
           <h1 className="text-2xl font-bold mb-4">
