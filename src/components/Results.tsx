@@ -110,7 +110,7 @@ const Results = (params: any) => {
                       href={item.pdfile}
                       target="_blank"
                       rel="noopener noreferrer"
-                      download={isMobile}
+                      download
                       className="text-sm md:text-lg text-indigo-600 hover:text-indigo-800 font-medium"
                     >
                       View PDF
