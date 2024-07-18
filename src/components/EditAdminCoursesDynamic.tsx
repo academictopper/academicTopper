@@ -4,37 +4,39 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Spotlight } from "./ui/Spotlight";
 
-
-export function EditAdminCoursesDynamic(params : any) {
-
+export function EditAdminCoursesDynamic(params: any) {
   const [formState, setFormState] = useState({
-    _id:"",
+    _id: "",
     board: "",
     class: "",
     subject: "",
     chapter: "",
     pdfile: "",
     questionArray: [{ question: "", answer: "", image: "" }],
+    isFeatured: "",
   });
+
+  const [showNotification, setShowNotification] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
 
   // http://localhost:3000/api/getSingleCourseDetails/667fc698933dc0d16ec62573
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetch(`/api/getSingleCourseDetails/${params.params.id}`);
-          const result = await response.json();
-          setFormState(result.data);
-          console.log("entered",result.data);
-        } catch (error) {
-          console.error("There was a problem with the fetch operation:", error);
-        }
-      };
-  
-      fetchData();
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `/api/getSingleCourseDetails/${params.params.id}`
+        );
+        const result = await response.json();
+        setFormState(result.data);
+        console.log("entered", result.data);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    };
 
-  
+    fetchData();
+  }, []);
 
   const saveImage = async (selectedImage: any, index: number) => {
     const data = new FormData();
@@ -47,7 +49,7 @@ export function EditAdminCoursesDynamic(params : any) {
       // if (selectedImage === null) {
       //   return toast.error("Please Upload image");
       // }
-
+      setFileLoading(true);
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/daxn1vtwk/image/upload",
         {
@@ -55,7 +57,6 @@ export function EditAdminCoursesDynamic(params : any) {
           body: data,
         }
       );
-
       const cloudData = await res.json();
       const updatedQuestionsFile = formState.questionArray.map((item, i) =>
         i === index ? { ...item, image: cloudData.url } : item
@@ -64,6 +65,7 @@ export function EditAdminCoursesDynamic(params : any) {
         ...formState,
         questionArray: updatedQuestionsFile,
       });
+      setTimeout(() =>  setFileLoading(false), 3000); // Hide the notification after 3 seconds
       // setImageUrl(cloudData.url);
     } catch (error) {}
   };
@@ -79,7 +81,7 @@ export function EditAdminCoursesDynamic(params : any) {
       // if (selectedImage === null) {
       //   return toast.error("Please Upload image");
       // }
-
+      setFileLoading(true);
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/daxn1vtwk/image/upload",
         {
@@ -87,12 +89,12 @@ export function EditAdminCoursesDynamic(params : any) {
           body: d,
         }
       );
-
       const cloudData = await res.json();
       setFormState({
         ...formState,
         [name]: cloudData.url,
       });
+      setTimeout(() =>  setFileLoading(false), 3000); // Hide the notification after 3 seconds
       // setPdfUrl(cloudData.url);
     } catch (error) {}
   };
@@ -175,22 +177,25 @@ export function EditAdminCoursesDynamic(params : any) {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
-      console.log({formState});
-      const response = await axios.patch('/api/updateData', {
-        id:formState._id,
+      console.log({ formState });
+      const response = await axios.patch("/api/updateData", {
+        id: formState._id,
         ...formState,
       });
-  
+
       console.log("Success:", response.data);
-      setFormState({
-        _id:"",
-        board: "",
-        class: "",
-        subject: "",
-        chapter: "",
-        pdfile: "",
-        questionArray: [{ question: "", answer: "", image: "" }],
-      });
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 3000); // Hide the notification after 3 seconds
+      // setFormState({
+      //   _id: "",
+      //   board: "",
+      //   class: "",
+      //   subject: "",
+      //   chapter: "",
+      //   pdfile: "",
+      //   questionArray: [{ question: "", answer: "", image: "" }],
+      //   isFeatured: "",
+      // });
     } catch (error) {
       console.error("Error:", error);
     }
@@ -198,14 +203,14 @@ export function EditAdminCoursesDynamic(params : any) {
 
   return (
     <div>
-     <div className="w-full bg-black/[0.96] antialiased bg-grid-white/[0.02]  flex justify-center items-center lg:h-auto">
-      <Spotlight
-        className="-top-40 left-0 md:left-60 md:-top-20"
-        fill="white"
-      />
+      <div className="w-full bg-black/[0.96] antialiased bg-grid-white/[0.02]  flex justify-center items-center lg:h-auto">
+        <Spotlight
+          className="-top-40 left-0 md:left-60 md:-top-20"
+          fill="white"
+        />
         <main className="bg-gray-400 mt-32 w-full h-full lg:h-[95%] lg:w-[70%] p-12 my-6 lg:rounded-tl-none lg:rounded-tr-[200px] lg:rounded-br-[200px] lg:rounded-bl-none">
           <h2 className="flex uppercase justify-center font-bold text-xl pt-10 pb-3 border-b-2 border-b-orange-700 lg:text-2xl lg:justify-start">
-            Admin Edit Portal
+            Admin Edit Portal - {formState.subject}
           </h2>
           <form
             className="m-2 flex flex-col items-center justify-center lg:m-20"
@@ -328,6 +333,30 @@ export function EditAdminCoursesDynamic(params : any) {
                       </select>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="isFeatured"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Want to Feature this :
+                </label>
+                <div className="mt-2">
+                  <select
+                    id="isFeatured"
+                    name="isFeatured"
+                    autoComplete="isFeatured-name"
+                    value={formState.isFeatured}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    required
+                  >
+                    <option>Select</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
                 </div>
               </div>
 
@@ -460,14 +489,23 @@ export function EditAdminCoursesDynamic(params : any) {
               >
                 Cancel
               </button> */}
-              <button
-                type="submit"
-                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Submit
-              </button>
+              {fileLoading ? (
+                <p>Uploading image please wait</p>
+              ) : (
+                <button
+                  type="submit"
+                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
+          {showNotification && (
+            <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-md">
+              Success! Item is edited successfully.
+            </div>
+          )}
         </main>
       </div>
     </div>
