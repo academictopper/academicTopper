@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Spotlight } from "./ui/Spotlight";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const AdminCourses = () => {
 
@@ -35,26 +36,39 @@ const AdminCourses = () => {
   const [error, setError] = useState(null);
 
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/getAllData");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-        setData(result.questions);
-        setLoading(false);
-      } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
-        // setError(error.toString());
-        setLoading(false);
+  const fetchData = async () => {
+    try {
+      const response = await fetch("/api/getAllData");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
+      const result = await response.json();
+      setData(result.questions);
+      setLoading(false);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+      // setError(error.toString());
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+   
 
     fetchData();
   }, []);
+    const deleteData = async (id:string) => {
+      try {
+        // const response = await fetch(`/api/deleteCourse/${id}`);
+        // const result = await response.json();
+        // console.log("entered",result.data);
+        await axios.delete(`/api/deleteCourse/${id}`)
+        await fetchData()
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    };
+
+
 
   if (loading) {
     return (
@@ -110,6 +124,12 @@ const AdminCourses = () => {
               className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
             >
               Edit
+            </button>
+            <button
+              onClick={() => deleteData(item._id)}
+              className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+            >
+              Delete
             </button>
           </div>
         </div>
