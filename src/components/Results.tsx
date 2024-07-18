@@ -66,14 +66,6 @@ const Results = (params: any) => {
     const regex = new RegExp(`(${query})`, "gi");
     return text.replace(regex, '<span class="bg-yellow-300">$1</span>');
   };
-  const handlePdfDownload = (pdfUrl: string) => {
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.download = pdfUrl.split("/").pop() || '';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   const isMobile = () => {
     return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -125,12 +117,6 @@ const Results = (params: any) => {
                     </a>
                   )}
                 </div>
-                <button
-                      onClick={() => handlePdfDownload(item.pdfile)}
-                      className="text-lg text-indigo-600 hover:text-indigo-800 font-medium"
-                    >
-                      Download PDF
-                    </button>
                 <h3 className="text-base md:text-xl font-medium mt-4 mb-2">Questions:</h3>
                 <ul className="space-y-4">
                   {item.questionArray.map(
