@@ -44,6 +44,10 @@ const Results = (params: any) => {
     setModalImageSrc('');
   };
 
+  const isMobile = () => {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] p-4">
       <Spotlight
@@ -64,9 +68,10 @@ const Results = (params: any) => {
                     href={item.pdfile}
                     target="_blank"
                     rel="noopener noreferrer"
+                    download
                     className="text-lg text-indigo-600 hover:text-indigo-800 font-medium"
                   >
-                    View PDF
+                    {isMobile() ? "Download PDF" : "View PDF"}
                   </a>
                 )}
               </div>
