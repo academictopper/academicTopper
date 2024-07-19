@@ -4,9 +4,6 @@ import { useRouter } from "next/navigation";
 import { Spotlight } from "./ui/Spotlight";
 import { useSearchParams } from "next/navigation";
 import Modal from "@/components/Image";
-import { Viewer, Worker } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const Results = (params: any) => {
   const router = useRouter();
@@ -16,7 +13,6 @@ const Results = (params: any) => {
   const [modalImageSrc, setModalImageSrc] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [pdfUrl, setPdfUrl] = useState("");
 
   const searchParams = useSearchParams();
   const board = searchParams.get("board");
@@ -42,9 +38,9 @@ const Results = (params: any) => {
   }, []);
 
   useEffect(() => {
-    const results = data.filter((item:any) =>
+    const results = data.filter((item: any) =>
       item.questionArray.some(
-        (questionItem:any) =>
+        (questionItem: any) =>
           questionItem.question
             .toLowerCase()
             .includes(searchQuery.toLowerCase()) ||
@@ -64,14 +60,15 @@ const Results = (params: any) => {
     setModalImageSrc("");
   };
 
-  const handlePdfClick = (pdfUrl: string) => {
-    setPdfUrl(pdfUrl);
-  };
-
+  // Function to highlight matching text
   const highlightText = (text: string, query: string) => {
     if (!query) return text;
     const regex = new RegExp(`(${query})`, "gi");
     return text.replace(regex, '<span class="bg-yellow-300">$1</span>');
+  };
+
+  const isMobile = () => {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   };
 
   return (
@@ -108,28 +105,17 @@ const Results = (params: any) => {
                   <strong>Class:</strong> {item.class}
                 </p>
                 <div className="absolute top-2 right-2">
-  {item.pdfile && (
-    <>
-      {/* Show on small screens only */}
-      <a
-        href={item.pdfile}
-        target="_blank"
-        rel="noopener noreferrer"
-        download
-        className="text-sm hidden md:block text-indigo-600 hover:text-indigo-800 font-medium"
-      >
-        View PDF
-      </a>
-      {/* Show on medium and larger screens only */}
-      <p
-        onClick={() => handlePdfClick(item.pdfile)}
-        className="cursor-pointer text-sm md:hidden  text-indigo-600 hover:text-indigo-800 font-medium"
-      >
-        View PDF
-      </p>
-    </>
-  )}
-</div>
+                  {item.pdfile && (
+                    <a
+                      href={item.pdfile}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm md:text-lg text-indigo-600 hover:text-indigo-800 font-medium"
+                    >
+                      View PDF
+                    </a>
+                  )}
+                </div>
                 <h3 className="text-base md:text-xl font-medium mt-4 mb-2">
                   Questions:
                 </h3>
@@ -191,19 +177,11 @@ const Results = (params: any) => {
           )}
         </div>
       </div>
-      {pdfUrl && (
-        <div style={{ width: '100%', height: '100vh' }}>
-          <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
-            <Viewer fileUrl={pdfUrl} />
-          </Worker>
-        </div>
-      )}
       <Modal
         show={isModalOpen}
         onClose={handleCloseModal}
         imageSrc={modalImageSrc}
       />
-      
     </div>
   );
 };
