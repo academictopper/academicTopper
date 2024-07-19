@@ -60,6 +60,22 @@ const Results = (params: any) => {
     setModalImageSrc("");
   };
 
+  const handleDownload = async (pdfUrl:string) => {
+    try {
+      const response = await fetch(pdfUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.pdf'); // You can use a dynamic name if needed
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+    }
+  };
+
   // Function to highlight matching text
   const highlightText = (text: string, query: string) => {
     if (!query) return text;
@@ -115,6 +131,14 @@ const Results = (params: any) => {
                       View PDF
                     </a>
                   )}
+                  {item.pdfile && (
+  <button
+    onClick={() => handleDownload(item.pdfile)}
+    className="text-sm md:text-lg text-indigo-600 hover:text-indigo-800 font-medium"
+  >
+    Download PDF
+  </button>
+)}
                 </div>
                 <h3 className="text-base md:text-xl font-medium mt-4 mb-2">
                   Questions:
