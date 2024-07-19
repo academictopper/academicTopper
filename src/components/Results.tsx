@@ -60,21 +60,24 @@ const Results = (params: any) => {
     setModalImageSrc("");
   };
 
- const handleDownload = async (pdfUrl:any) => {
-  try {
-    const response = await fetch(pdfUrl);
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'file.pdf'); // Use the actual file name if needed
-    document.body.appendChild(link);
-    link.click();
-    link.parentNode?.removeChild(link);
-    window.URL.revokeObjectURL(url); // Clean up
-  } catch (error) {
-    console.error('Error downloading PDF:', error);
-  }
+//  const handleDownload = async (pdfUrl:any) => {
+//   try {
+//     const response = await fetch(pdfUrl);
+//     const blob = await response.blob();
+//     const url = window.URL.createObjectURL(blob);
+//     const link = document.createElement('a');
+//     link.href = url;
+//     link.setAttribute('download', 'file.pdf'); // Use the actual file name if needed
+//     document.body.appendChild(link);
+//     link.click();
+//     link.parentNode?.removeChild(link);
+//     window.URL.revokeObjectURL(url); // Clean up
+//   } catch (error) {
+//     console.error('Error downloading PDF:', error);
+//   }
+// };
+const handleDownload = (pdfUrl:string)=> {
+    window.location.href = pdfUrl;
 };
 
   // Function to highlight matching text
