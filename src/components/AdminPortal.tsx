@@ -89,9 +89,10 @@ export function AdminPortal() {
       );
 
       const cloudData = await res.json();
+      console.log({cloudData})
       setFormState({
         ...formState,
-        [name]: cloudData.url,
+        [name]: cloudData.secure_url,
       });
       // setPdfUrl(cloudData.url);
     } catch (error) {}
