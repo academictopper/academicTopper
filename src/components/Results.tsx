@@ -126,7 +126,7 @@ const Results = (params: any) => {
                       href={item.pdfile}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm md:text-lg text-indigo-600 hover:text-indigo-800 font-medium"
+                      className="text-sm md:text-lg text-indigo-600 hover:text-indigo-800 font-medium hidden md:block"
                     >
                       View PDF
                     </a>
@@ -134,7 +134,7 @@ const Results = (params: any) => {
                   {item.pdfile && (
   <button
     onClick={() => handleDownload(item.pdfile)}
-    className="text-sm md:text-lg text-indigo-600 hover:text-indigo-800 font-medium"
+    className="text-sm md:text-lg text-indigo-600 hover:text-indigo-800 font-medium sm:hidden"
   >
     Download PDF
   </button>
