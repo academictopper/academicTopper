@@ -11,4 +11,15 @@ const ShowResult = ({ params }: any) => {
   );
 };
 
+export function generateMetadata(){
+  return{
+    title:"Results",
+    description:"Contains all the Results",
+    keywords:"Courses,details,study material,academic topper",
+    robots:"index, follow",
+    language:"EN",
+
+  }
+}
+
 export default ShowResult;

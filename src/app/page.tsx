@@ -8,3 +8,14 @@ export default function Home() {
       </main>
   );
 }
+export function generateMetadata(){
+  return{
+    title:"Academic Topper",
+    description:"Academic topper",
+    keywords:"Academic topper",
+    robots:"index, follow",
+    language:"EN",
+
+  }
+}
+
