@@ -76,8 +76,25 @@ const Results = (params: any) => {
 //     console.error('Error downloading PDF:', error);
 //   }
 // };
-const handleDownload = (pdfUrl:string)=> {
-    window.location.href = pdfUrl;
+// const handleDownload = (pdfUrl:string)=> {
+//     window.location.href = pdfUrl;
+// };
+const handleDownload = async (pdfUrl:any) => {
+  try {
+    const response = await fetch(pdfUrl);
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = 'study';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    console.error('Failed to download PDF:', error);
+  }
 };
 
   // Function to highlight matching text
