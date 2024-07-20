@@ -92,7 +92,7 @@ export function EditAdminCoursesDynamic(params: any) {
       const cloudData = await res.json();
       setFormState({
         ...formState,
-        [name]: cloudData.url,
+        [name]: cloudData.secure_url,
       });
       setTimeout(() =>  setFileLoading(false), 3000); // Hide the notification after 3 seconds
       // setPdfUrl(cloudData.url);
