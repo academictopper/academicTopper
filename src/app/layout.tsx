@@ -26,14 +26,10 @@ export default function RootLayout({
             <Navbar />
           </div>
 
-        <div className="relative w-full flex items-center justify-center ">
-
-          <Navbar />
-        </div>
+      
 
         {children}
         <Analytics/>
-          {children}
           <div className="relative w-full flex items-center justify-center ">
             <Footer/>
           </div>
