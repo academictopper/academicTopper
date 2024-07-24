@@ -35,7 +35,7 @@ function HeroSection() {
             Welcome to Academic Topper
           </h1>
           <p className="mt-4 font-normal text-base md:text-lg text-neutral-300 max-w-lg mx-auto">
-            Welcome {data?.user?.name || "Students"} Unlock Your Full Potential
+            Welcome <span className="text-cyan-500">{data?.user?.name || "Students"} </span> Unlock Your Full Potential
             with Expert Guidance: Tailored Support and Strategies for Achieving
             Excellence.
           </p>
