@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from "@/components/Navbar";
 import NextAuthSessionProvider from "./provider/sessionProvider";
 import Footer from "@/components/Footer";
@@ -25,7 +26,10 @@ export default function RootLayout({
             <Navbar />
           </div>
 
-          {children}
+      
+
+        {children}
+        <Analytics/>
           <div className="relative w-full flex items-center justify-center ">
             <Footer/>
           </div>
