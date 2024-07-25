@@ -108,6 +108,12 @@ const Results = (params: any) => {
     return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   };
 
+  const formatText = (text: string) => {
+    const formattedText = text
+      .replace(/\n/g, '<br/>')
+      .replace(/ {2}/g, ' &nbsp;'); // Replace double spaces with a non-breaking space
+    return formattedText;
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] p-4">
       <Spotlight
@@ -182,7 +188,7 @@ const Results = (params: any) => {
                               className="text-sm md:text-lg mb-2"
                               dangerouslySetInnerHTML={{
                                 __html: `<strong>Question:</strong> ${highlightText(
-                                  questionItem.question,
+                                  formatText(questionItem.question),
                                   searchQuery
                                 )}`,
                               }}
@@ -191,7 +197,7 @@ const Results = (params: any) => {
                               className="text-sm md:text-lg mb-2"
                               dangerouslySetInnerHTML={{
                                 __html: `<strong>Answer:</strong> ${highlightText(
-                                  questionItem.answer,
+                                  formatText(questionItem.answer),
                                   searchQuery
                                 )}`,
                               }}
