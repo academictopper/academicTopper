@@ -262,6 +262,9 @@ export function AdminPortal() {
                         <option value="11">11</option>
                         <option value="10">10</option>
                         <option value="9">9</option>
+                        <option value="8">8</option>
+                        <option value="7">7</option>
+                        <option value="6">6</option>
                       </select>
                     </div>
                   </div>
@@ -285,10 +288,12 @@ export function AdminPortal() {
                       >
                         <option>Select</option>
                         <option value="Mathematics">Mathematics</option>
-                        <option value="English">English</option>
+                        <option value="Science">Science</option>
                         <option value="Physics">Physics</option>
                         <option value="Chemistry">Chemistry</option>
                         <option value="Biology">Biology</option>
+                        <option value="English">English</option>
+
                       </select>
                     </div>
                   </div>
@@ -326,6 +331,11 @@ export function AdminPortal() {
                         <option value="13">13</option>
                         <option value="14">14</option>
                         <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
                       </select>
                     </div>
                   </div>
