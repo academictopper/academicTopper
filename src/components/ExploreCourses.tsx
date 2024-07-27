@@ -1,19 +1,19 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Spotlight } from "./ui/Spotlight";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const ExploreCourses = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    board: '',
-    class: '',
-    subject: '',
-    chapter: '',
-    showPdf: 'No',
+    board: "",
+    class: "",
+    subject: "",
+    chapter: "",
+    showPdf: "No",
   });
   const [isFormComplete, setIsFormComplete] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -27,10 +27,10 @@ const ExploreCourses = () => {
     const { board, class: classValue, subject, chapter } = formData;
     if (board && classValue && subject && chapter) {
       setIsFormComplete(true);
-      setErrorMessage('');
+      setErrorMessage("");
     } else {
       setIsFormComplete(false);
-      setErrorMessage('Please fill out all fields.');
+      setErrorMessage("Please fill out all fields.");
     }
   }, [formData]);
 
@@ -44,8 +44,8 @@ const ExploreCourses = () => {
         chapter: formData.chapter,
       });
 
-      if (formData.showPdf === 'Yes') {
-        queryParams.append('showPdf', 'true');
+      if (formData.showPdf === "Yes") {
+        queryParams.append("showPdf", "true");
       }
 
       router.push(`/results?${queryParams.toString()}`);
@@ -109,6 +109,9 @@ const ExploreCourses = () => {
                   <option value="11">11</option>
                   <option value="10">10</option>
                   <option value="9">9</option>
+                  <option value="8">8</option>
+                  <option value="7">7</option>
+                  <option value="6">6</option>
                 </select>
               </div>
             </div>
@@ -132,10 +135,11 @@ const ExploreCourses = () => {
                 >
                   <option>Select</option>
                   <option value="Mathematics">Mathematics</option>
-                  <option value="English">English</option>
+                  <option value="Science">Science</option>
                   <option value="Physics">Physics</option>
                   <option value="Chemistry">Chemistry</option>
                   <option value="Biology">Biology</option>
+                  <option value="English">English</option>
                 </select>
               </div>
             </div>
@@ -173,6 +177,11 @@ const ExploreCourses = () => {
                   <option value="13">13</option>
                   <option value="14">14</option>
                   <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
                 </select>
               </div>
             </div>
@@ -199,17 +208,15 @@ const ExploreCourses = () => {
             </div>
           </div>
           {errorMessage && (
-            <div className="mt-4 text-center text-red-500">
-              {errorMessage}
-            </div>
+            <div className="mt-4 text-center text-red-500">{errorMessage}</div>
           )}
           <div className="mt-6 flex justify-center">
             <button
               type="submit"
               className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm ${
                 isFormComplete
-                  ? 'text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                  : 'text-gray-500 bg-gray-300 cursor-not-allowed'
+                  ? "text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  : "text-gray-500 bg-gray-300 cursor-not-allowed"
               }`}
               disabled={!isFormComplete}
             >
