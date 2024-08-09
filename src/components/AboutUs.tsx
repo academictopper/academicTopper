@@ -51,7 +51,7 @@ const AboutUs = () => {
           Contact Us
         </h2>
         <p className="text-lg leading-relaxed text-gray-300">
-          If you have any questions, suggestions, or feedback, we'd love to hear
+          If you have any questions, suggestions, or feedback, we&apos;d love to hear
           from you! Feel free to reach out to us at
           <a
             href="mailto:academictopper7@gmail.com"
