@@ -13,7 +13,7 @@ const AboutUs = () => {
           About Us
         </h1>
         <p className="text-lg leading-relaxed mb-8 text-gray-300">
-          Welcome to AcademicTopper! We are dedicated to providing high-quality
+          Welcome to Academic Topper! We are dedicated to providing high-quality
           educational resources and tools to help students excel in their
           studies. Our mission is to empower students by offering a platform
           where they can access comprehensive study materials, practice
@@ -52,10 +52,10 @@ const AboutUs = () => {
         </h2>
         <p className="text-lg leading-relaxed text-gray-300">
           If you have any questions, suggestions, or feedback, we'd love to hear
-          from you! Feel free to reach out to us at{" "}
+          from you! Feel free to reach out to us at
           <a
             href="mailto:academictopper7@gmail.com"
-            className="text-indigo-500 underline"
+            className="text-indigo-500 underline ml-2"
           >
             academictopper7@gmail.com
           </a>
