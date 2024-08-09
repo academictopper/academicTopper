@@ -13,20 +13,20 @@ const ContactUs: React.FC = () => {
       />
         <h2 className="text-3xl font-bold mb-4">Get in touch</h2>
         <p className="mb-4">
-          Proin volutpat consequat porttitor cras nullam gravida at. Orci molestie a eu arcu. Sed ut tincidunt integer elementum id sem. Arcu sed malesuada et magna.
+          We strive to improve education by providing personalized assistance to learners facing challenges with specific concepts or questions. 
         </p>
         <div className="mt-4">
           <div className="flex items-center mb-2">
             <span className="material-icons">location_on</span>
-            <span className="ml-2">545 Mavis Island, Chicago, IL 99191</span>
+            <span className="ml-2">New Delhi, Delhi, India</span>
           </div>
-          <div className="flex items-center mb-2">
+          {/* <div className="flex items-center mb-2">
             <span className="material-icons">phone</span>
             <span className="ml-2">+1 (555) 234-5678</span>
-          </div>
+          </div> */}
           <div className="flex items-center">
             <span className="material-icons">email</span>
-            <span className="ml-2">hello@example.com</span>
+            <span className="ml-2">academictopper7@gmail.com</span>
           </div>
         </div>
       </div>
