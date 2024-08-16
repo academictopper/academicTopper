@@ -140,22 +140,8 @@ const Footer: React.FC = () => {
               <h2 className="text-lg font-semibold mb-4">
                 Subscribe to our newsletter
               </h2>
-              <p className="text-gray-400 mb-4">
-                The latest news, articles, and resources, sent to your inbox weekly.
-              </p>
-              <form className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="bg-gray-800 text-gray-300 p-2 flex-1 rounded-l"
-                />
-                <button
-                  type="submit"
-                  className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 rounded-r"
-                >
-                  Subscribe
-                </button>
-              </form>
+             
+            
             </div>
           </div>
         </div>
