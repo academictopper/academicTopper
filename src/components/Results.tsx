@@ -110,8 +110,11 @@ const Results = (params: any) => {
 
   const formatText = (text: string) => {
     const formattedText = text
-      .replace(/\n/g, '<br/>')
-      .replace(/ {2}/g, ' &nbsp;'); // Replace double spaces with a non-breaking space
+      .replace(/<b\/>/g, '<b>')          // Convert <b/> to <b>
+      .replace(/<\/b\/>/g, '</b>')      // Convert </b/> to </b>
+      .replace(/\n/g, '<br/>')          // Replace newlines with <br/>
+      .replace(/ {2}/g, ' &nbsp;');     // Replace double spaces with a non-breaking space
+  
     return formattedText;
   };
   return (
