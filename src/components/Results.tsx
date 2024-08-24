@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Spotlight } from "./ui/Spotlight";
@@ -19,12 +19,20 @@ const Results = (params: any) => {
   const clas = searchParams.get("class");
   const subject = searchParams.get("subject");
   const chapter = searchParams.get("chapter");
+  const exercise = searchParams.get("exercise");
   const showPdf = searchParams.get("showPdf");
 
   useEffect(() => {
-    fetch(
-      `/api/getAllData?board=${board}&class=${clas}&subject=${subject}&chapter=${chapter}`
-    )
+    // Construct the API URL based on the subject and exercise
+    let apiUrl = `/api/getAllData?board=${board}&class=${clas}&subject=${subject}&chapter=${chapter}`;
+
+    // Append exercise if it's Mathematics and exercise has a value
+    if (subject === "Mathematics" && exercise) {
+      console.log(exercise);
+      apiUrl += `&exercise=${exercise}`;
+    }
+
+    fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
         setData(data.questions);
@@ -35,7 +43,7 @@ const Results = (params: any) => {
         }
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  }, [board, clas, subject, chapter, exercise, showPdf]);
 
   useEffect(() => {
     const results = data.filter((item: any) =>
@@ -110,8 +118,8 @@ const Results = (params: any) => {
 
   const formatText = (text: string) => {
     const formattedText = text
-      .replace(/\n/g, '<br/>')
-      .replace(/ {2}/g, ' &nbsp;'); // Replace double spaces with a non-breaking space
+      .replace(/\n/g, "<br/>")
+      .replace(/ {2}/g, " &nbsp;"); // Replace double spaces with a non-breaking space
     return formattedText;
   };
   return (
@@ -141,6 +149,9 @@ const Results = (params: any) => {
                 <h2 className="text-lg md:text-2xl font-semibold mb-4 text-center">
                   {item.subject} - {item.chapter}
                 </h2>
+                <p className="text-base md:text-lg text-center mb-2">
+                  <strong>Exercise:</strong> {exercise}
+                </p>
                 <p className="text-base md:text-lg text-center mb-2">
                   <strong>Board:</strong> {item.board}
                 </p>
@@ -193,6 +204,19 @@ const Results = (params: any) => {
                                 )}`,
                               }}
                             />
+                            {questionItem.image && (
+                              <div className="mt-4 md:mt-0 md:ml-4 flex-shrink-0">
+                                Question Image
+                                <img
+                                  src={questionItem.image}
+                                  alt="Question Image"
+                                  className="w-32 h-32 md:w-40 md:h-36 object-contain rounded-lg shadow-md cursor-pointer"
+                                  onClick={() =>
+                                    handleImageClick(questionItem.image)
+                                  }
+                                />
+                              </div>
+                            )}
                             <p
                               className="text-sm md:text-lg mb-2"
                               dangerouslySetInnerHTML={{
@@ -205,6 +229,9 @@ const Results = (params: any) => {
                           </div>
                           {questionItem.image && (
                             <div className="mt-4 md:mt-0 md:ml-4 flex-shrink-0">
+                              <center className="text-cyan-500">
+                                Answer Image
+                              </center>
                               <img
                                 src={questionItem.image}
                                 alt="Question Image"

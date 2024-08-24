@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-            <div>
+            <div className=" md:block mr-10">
               <h2 className="text-lg font-semibold mb-4">
                 Subscribe to our newsletter
               </h2>
