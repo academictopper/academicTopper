@@ -5,10 +5,12 @@ interface IQuestion {
   class: string;
   subject: string;
   chapter: string;
+  exercise?:string;
   questionArray: {
     question: string;
     answer: string;
     image?: string;
+    image2?: string;
   }[];
   pdfile?: string;
   isFeatured?:boolean
@@ -26,10 +28,12 @@ const QuestionSchema: Schema<QuestionDocument> = new Schema({
       question: { type: String, required: true },
       answer: { type: String, required: true },
       image: { type: String },
+      image2:{type:String}
     },
   ],
   pdfile: { type: String },
   isFeatured:{type:Boolean},
+  exercise:{ type: String, required: false }
 });
 
 const Question: Model<QuestionDocument> = mongoose.models.Question || mongoose.model<QuestionDocument>('Question', QuestionSchema);
