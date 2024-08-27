@@ -118,11 +118,11 @@ const Results = (params: any) => {
 
   const formatText = (text: string) => {
     const formattedText = text
-      .replace(/<b\/>/g, '<b>')          // Convert <b/> to <b>
-      .replace(/<\/b\/>/g, '</b>')      // Convert </b/> to </b>
-      .replace(/\n/g, '<br/>')          // Replace newlines with <br/>
-      .replace(/ {2}/g, ' &nbsp;');     // Replace double spaces with a non-breaking space
-  
+      .replace(/<b\/>/g, "<b>") // Convert <b/> to <b>
+      .replace(/<\/b\/>/g, "</b>") // Convert </b/> to </b>
+      .replace(/\n/g, "<br/>") // Replace newlines with <br/>
+      .replace(/ {2}/g, " &nbsp;"); // Replace double spaces with a non-breaking space
+
     return formattedText;
   };
   return (
@@ -149,12 +149,14 @@ const Results = (params: any) => {
                 key={item._id}
                 className="border p-6 rounded-lg bg-gray-400 shadow-lg relative"
               >
-                <h2 className="text-lg md:text-2xl font-semibold mb-4 text-center">
+                <h2 className="text-lg md:text-2xl font-semibold mb-4 mt-6 text-center">
                   {item.subject} - {item.chapter}
                 </h2>
-                <p className="text-base md:text-lg text-center mb-2">
-                  <strong>Exercise:</strong> {exercise}
-                </p>
+                {item.subject === "Mathematics" && (
+                  <p className="text-base md:text-lg text-center mb-2">
+                    <strong>Exercise:</strong> {item.exercise}
+                  </p>
+                )}
                 <p className="text-base md:text-lg text-center mb-2">
                   <strong>Board:</strong> {item.board}
                 </p>
@@ -207,15 +209,17 @@ const Results = (params: any) => {
                                 )}`,
                               }}
                             />
-                            {questionItem.image && (
-                              <div className="mt-4 md:mt-0 md:ml-4 flex-shrink-0">
-                                Question Image
+                            {questionItem.image2 && (
+                              <div className="mt-4 md:mt-0 md:ml-4 flex-shrink-0 w-40">
+                                <p className="text-center text-sm md:text-lg font-semibold text-cyan-500 mb-2">
+                                  Question Image
+                                </p>
                                 <img
-                                  src={questionItem.image}
+                                  src={questionItem.image2}
                                   alt="Question Image"
                                   className="w-32 h-32 md:w-40 md:h-36 object-contain rounded-lg shadow-md cursor-pointer"
                                   onClick={() =>
-                                    handleImageClick(questionItem.image)
+                                    handleImageClick(questionItem.image2)
                                   }
                                 />
                               </div>
@@ -232,9 +236,9 @@ const Results = (params: any) => {
                           </div>
                           {questionItem.image && (
                             <div className="mt-4 md:mt-0 md:ml-4 flex-shrink-0">
-                              <center className="text-cyan-500">
+                              <p className="text-center text-sm md:text-lg font-semibold text-cyan-500 mb-2">
                                 Answer Image
-                              </center>
+                              </p>
                               <img
                                 src={questionItem.image}
                                 alt="Question Image"
