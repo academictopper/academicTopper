@@ -10,8 +10,9 @@ export function AdminPortal() {
     class: "",
     subject: "",
     chapter: "",
+    exercise: "",
     pdfile: "",
-    questionArray: [{ question: "", answer: "", image: "" }],
+    questionArray: [{ question: "", answer: "", image: "", image2: "" }],
     isFeatured: "",
   });
 
@@ -36,7 +37,7 @@ export function AdminPortal() {
     }
   }, [formState]);
 
-  const saveImage = async (selectedImage: any, index: number) => {
+  const saveImage = async (selectedImage: any, index: number, imageType: string) => {
     const data = new FormData();
     // console.log(selectedImage, "myImage");
     data.append("file", selectedImage);
@@ -58,14 +59,16 @@ export function AdminPortal() {
 
       const cloudData = await res.json();
       const updatedQuestionsFile = formState.questionArray.map((item, i) =>
-        i === index ? { ...item, image: cloudData.url } : item
+        i === index ? { ...item, [imageType]: cloudData.url } : item
       );
       setFormState({
         ...formState,
         questionArray: updatedQuestionsFile,
       });
       // setImageUrl(cloudData.url);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
   };
 
   const savePdf = async (selectedPdf: any, name: any) => {
@@ -89,7 +92,7 @@ export function AdminPortal() {
       );
 
       const cloudData = await res.json();
-      console.log({cloudData})
+      console.log({ cloudData });
       setFormState({
         ...formState,
         [name]: cloudData.secure_url,
@@ -141,12 +144,13 @@ export function AdminPortal() {
   ) => {
     console.log(e);
     const { name, files } = e.target;
-    console.log("destructured", name, files);
+    // console.log("destructured", name, files);
     const selectedImage = e.target.files[0];
-    console.log(selectedImage, "selected Image");
+    // console.log(selectedImage, "selected Image");
     if (selectedImage) {
       console.log(index);
-      await saveImage(selectedImage, index);
+      // await saveImage(selectedImage, index);
+      await saveImage(selectedImage, index, name);
       // location.reload();
     }
     console.log(selectedImage);
@@ -158,7 +162,7 @@ export function AdminPortal() {
       ...formState,
       questionArray: [
         ...formState.questionArray,
-        { question: "", answer: "", image: "" },
+        { question: "", answer: "", image: "", image2: "" },
       ],
     });
   };
@@ -185,8 +189,9 @@ export function AdminPortal() {
         class: "",
         subject: "",
         chapter: "",
+        exercise: "",
         pdfile: "",
-        questionArray: [{ question: "", answer: "", image: "" }],
+        questionArray: [{ question: "", answer: "", image: "", image2: "" }],
         isFeatured: "",
       });
     } catch (error) {
@@ -293,7 +298,6 @@ export function AdminPortal() {
                         <option value="Chemistry">Chemistry</option>
                         <option value="Biology">Biology</option>
                         <option value="English">English</option>
-
                       </select>
                     </div>
                   </div>
@@ -339,6 +343,50 @@ export function AdminPortal() {
                       </select>
                     </div>
                   </div>
+
+                  {formState.subject === "Mathematics" && (
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="exercise"
+                        className="block text-sm font-medium text-gray-900"
+                      >
+                        Exercise
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          name="exercise"
+                          id="exercise"
+                          // value={formState.exercise}
+                          onChange={handleChange}
+                          autoComplete="exercise-name"
+                          className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          required
+                        >
+                          <option>Select</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          {/* <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option> */}
+                        </select>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -416,58 +464,22 @@ export function AdminPortal() {
                       </div>
                     </div>
 
-                    {/* <div className="col-span-full">
-                      <label
-                        htmlFor="upload-image"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Upload Image
-                      </label>
-                      <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                        <div className="text-center">
-                          <svg
-                            className="mx-auto h-12 w-12 text-gray-300"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                            <label
-                              htmlFor="image"
-                              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                            >
-                              <span>Upload a file</span>
-                              <input
-                                id="image"
-                                name="image"
-                                // value={item.image}
-                                onChange={(e) =>
-                                  handleQuestionFileChange(index, e)
-                                }
-                                type="file"
-                                className="sr-only"
-                              />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                          </div>
-                          <p className="text-xs leading-5 text-gray-600">
-                            PNG, JPG, GIF up to 10MB
-                          </p>
-                        </div>
-                      </div>
-                    </div> */}
                     <div className="col-span-full">
                       <div className="mt-2">
-                        <label>Image : </label>
+                        <label>Answer Image : </label>
                         <input
                           type="file"
                           name="image"
+                          onChange={(e) => handleQuestionFileChange(index, e)}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-span-full">
+                      <div className="mt-2">
+                        <label>Question Image : </label>
+                        <input
+                          type="file"
+                          name="image2"
                           onChange={(e) => handleQuestionFileChange(index, e)}
                         />
                       </div>
