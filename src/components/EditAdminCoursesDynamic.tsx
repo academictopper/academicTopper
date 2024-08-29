@@ -11,8 +11,9 @@ export function EditAdminCoursesDynamic(params: any) {
     class: "",
     subject: "",
     chapter: "",
+    exercise: "",
     pdfile: "",
-    questionArray: [{ question: "", answer: "", image: "" }],
+    questionArray: [{ question: "", answer: "", image: "", image2: "" }],
     isFeatured: "",
   });
 
@@ -38,7 +39,11 @@ export function EditAdminCoursesDynamic(params: any) {
     fetchData();
   }, []);
 
-  const saveImage = async (selectedImage: any, index: number) => {
+  const saveImage = async (
+    selectedImage: any,
+    index: number,
+    imageType: string
+  ) => {
     const data = new FormData();
     // console.log(selectedImage, "myImage");
     data.append("file", selectedImage);
@@ -59,7 +64,7 @@ export function EditAdminCoursesDynamic(params: any) {
       );
       const cloudData = await res.json();
       const updatedQuestionsFile = formState.questionArray.map((item, i) =>
-        i === index ? { ...item, image: cloudData.url } : item
+        i === index ? { ...item, [imageType]: cloudData.url } : item
       );
       setFormState({
         ...formState,
@@ -147,7 +152,7 @@ export function EditAdminCoursesDynamic(params: any) {
     console.log(selectedImage, "selected Image");
     if (selectedImage) {
       console.log(index);
-      await saveImage(selectedImage, index);
+      await saveImage(selectedImage, index, name);
       // location.reload();
     }
     console.log(selectedImage);
@@ -159,7 +164,7 @@ export function EditAdminCoursesDynamic(params: any) {
       ...formState,
       questionArray: [
         ...formState.questionArray,
-        { question: "", answer: "", image: "" },
+        { question: "", answer: "", image: "", image2: "" },
       ],
     });
   };
@@ -342,6 +347,50 @@ export function EditAdminCoursesDynamic(params: any) {
                       </select>
                     </div>
                   </div>
+
+                  {formState.subject === "Mathematics" && (
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="exercise"
+                        className="block text-sm font-medium text-gray-900"
+                      >
+                        Exercise
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          name="exercise"
+                          id="exercise"
+                          value={formState.exercise}
+                          onChange={handleChange}
+                          autoComplete="exercise-name"
+                          className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          required
+                        >
+                          <option>Select</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          {/* <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option> */}
+                        </select>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -465,9 +514,10 @@ export function EditAdminCoursesDynamic(params: any) {
                         </div>
                       </div>
                     </div> */}
+
                     <div className="col-span-full">
                       <div className="mt-2">
-                        <label>Image : </label>
+                        <label>Answer Image : </label>
                         <input
                           type="file"
                           name="image"
@@ -475,6 +525,17 @@ export function EditAdminCoursesDynamic(params: any) {
                         />
                       </div>
                     </div>
+                    <div className="col-span-full">
+                      <div className="mt-2">
+                        <label>Question Image : </label>
+                        <input
+                          type="file"
+                          name="image2"
+                          onChange={(e) => handleQuestionFileChange(index, e)}
+                        />
+                      </div>
+                    </div>
+                    
                     <div>
                       <button
                         type="button"
