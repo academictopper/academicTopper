@@ -10,6 +10,7 @@ const ExploreCourses = () => {
     class: "",
     subject: "",
     chapter: "",
+    exercise: "",
     showPdf: "No",
   });
   const [isFormComplete, setIsFormComplete] = useState(false);
@@ -42,7 +43,13 @@ const ExploreCourses = () => {
         class: formData.class,
         subject: formData.subject,
         chapter: formData.chapter,
+        exercise: formData.exercise,
       });
+
+      // // Only append exercise if it has a value
+      // if (formData.subject === "Mathematics" && formData.exercise) {
+      //   queryParams.append("exercise", formData.exercise);
+      // }
 
       if (formData.showPdf === "Yes") {
         queryParams.append("showPdf", "true");
@@ -185,6 +192,50 @@ const ExploreCourses = () => {
                 </select>
               </div>
             </div>
+
+            {formData.subject === "Mathematics" && (
+              <div className="sm:col-span-1">
+                <label
+                  htmlFor="exercise"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Exercise
+                </label>
+                <div className="mt-2">
+                  <select
+                    name="exercise"
+                    id="exercise"
+                    value={formData.exercise}
+                    onChange={handleChange}
+                    autoComplete="exercise-name"
+                    className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    required
+                  >
+                    <option>Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    {/* <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option> */}
+                  </select>
+                </div>
+              </div>
+            )}
 
             <div className="sm:col-span-1">
               <label
