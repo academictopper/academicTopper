@@ -210,8 +210,8 @@ const Results = (params: any) => {
                               }}
                             />
                             {questionItem.image2 && (
-                              <div className="mt-4 md:mt-0 md:ml-4 flex-shrink-0 w-40">
-                                <p className="text-center text-sm md:text-lg font-semibold text-cyan-500 mb-2">
+                              <div className="mt-4 mb-4 md:mt-0 md:ml-4 flex-shrink-0 w-40">
+                                <p className="text-center text-sm md:text-lg font-semibold text-cyan-500 mb-2 hidden md:block">
                                   Question Image
                                 </p>
                                 <img
@@ -235,8 +235,8 @@ const Results = (params: any) => {
                             />
                           </div>
                           {questionItem.image && (
-                            <div className="mt-4 md:mt-0 md:ml-4 flex-shrink-0">
-                              <p className="text-center text-sm md:text-lg font-semibold text-cyan-500 mb-2">
+                            <div className="mt-4 mb-4 md:mt-0 md:ml-4 flex-shrink-0">
+                              <p className="text-center text-sm md:text-lg font-semibold text-cyan-500 mb-2 hidden md:block">
                                 Answer Image
                               </p>
                               <img
