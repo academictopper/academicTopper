@@ -58,7 +58,9 @@ export function AllCourses() {
                                 <p className="text-sm text-neutral-600 dark:text-neutral-400 flex-grow">Chapter: {course.chapter}</p>
                                 <p className="text-sm text-neutral-600 dark:text-neutral-400 flex-grow">Class: {course.class}</p>
 
-                                <Link href={`/results/?board=${course.board}&class=${course.class}&subject=${course.subject}&chapter=${course.chapter}`}>
+                                <Link href={`/results/?board=${course.board}&class=${course.class}&subject=${course.subject}&chapter=${course.chapter}`} className="text-white
+                                
+                                ">
                                 Learn More
                                 </Link>
                             </div>
