@@ -241,6 +241,7 @@ export function AdminPortal() {
                         <option value="CBSE">CBSE</option>
                         <option value="ICSE">ICSE</option>
                         <option value="RBSE">RBSE</option>
+                        <option value="MPBSE">MPBSE</option>
                       </select>
                     </div>
                   </div>
