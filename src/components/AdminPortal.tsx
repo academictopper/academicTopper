@@ -299,6 +299,9 @@ export function AdminPortal() {
                         <option value="Chemistry">Chemistry</option>
                         <option value="Biology">Biology</option>
                         <option value="English">English</option>
+                        <option value="Geography">Geography</option>
+                        <option value="History">History</option>
+                  <option value="Economics">Economics</option>
                       </select>
                     </div>
                   </div>
