@@ -13,12 +13,12 @@ export async function POST(request:NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
     // Check if a question with the same board, class, subject, and chapter already exists
-    const existingQuestion = await Question.findOne({ board, class: className, subject, chapter,exercise });
+    const existingQuestion = await Question.findOne({ board, class: className, subject, chapter,exercise:exercise ? exercise.toString() : null });
     if (existingQuestion) {
       return NextResponse.json({ error: 'A question with the same board, class, subject, and chapter already exists' }, { status: 409 });
     }
 
-    const newQuestion = new Question({
+    const newQuestion = await new Question({
       board,
       class: className,
       subject,
